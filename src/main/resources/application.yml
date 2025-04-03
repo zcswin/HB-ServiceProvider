@@ -19,7 +19,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-      
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 eureka:
   client:
     service-url:
@@ -57,9 +58,9 @@ info:
 #    org.springframework.boot.actuate.info: DEBUG
 
 springdoc:
+  swagger-ui:
+    path: /swagger-ui
 #  api-docs:
 #    title: "@project.name@"
 #    description: "@project.description@"
 #    version: "@java.version@"
-  swagger-ui:
-    path: /swagger-ui
