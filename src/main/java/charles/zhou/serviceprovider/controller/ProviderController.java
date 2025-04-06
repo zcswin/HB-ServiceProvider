@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import charles.zhou.serviceprovider.entity.User;
@@ -11,7 +12,7 @@ import charles.zhou.serviceprovider.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-//@RequestMapping("/users")
+@RequestMapping("/service-provider")
 public class ProviderController {
     @GetMapping("/service")
     @Operation(summary = "提供服务消息", description = "返回服务消息详细")
