@@ -15,13 +15,24 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      auto-commit: true
+      idle-timeout: 10000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
   jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: update # 开发环境使用，生产环境建议改为 none
     show-sql: true
-#  autoconfigure:
-#    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-
+  sql:
+    init:
+      mode: always # 开发环境使用，生产环境建议改为 never
+      data-locations: classpath:data/mysql.sql
 eureka:
   client:
     service-url:
@@ -32,20 +43,18 @@ mybatis-plus:
     map-underscore-to-camel-case: true
   global-config:
     db-config:
-      id-type: auto # 自动生成主键
-#      field-strategy: not_empty # 字段策略
+      id-type: auto
     banner: false
-      
+
 management:
-  info: # 显示任意的应用信息，默认关闭  springBoot版本：2.7.5 CURRENT  GA如果是更低一些的版本默认是开启的
+  info:
     env:
       enabled: true
   endpoints:
     web:
-      base-path: /actuator  #配置端点访问前缀
+      base-path: /actuator
       exposure:
-        include: info,health  #只暴露info,health两个端点; “*” 表示暴露所有端点
-        exclude: health  #可以将以暴露的端点排除（不暴露）
+        include: info, health
 
 info:
   app:
@@ -54,14 +63,11 @@ info:
     java:
       source: "@java.version@"
       target: "@java.version@"
-#logging:
-#  level:
-#    org.springframework.boot.actuate.info: DEBUG
+
+logging:
+  level:
+    '[com.zaxxer.hikari]': DEBUG
 
 springdoc:
   swagger-ui:
     path: /swagger-ui
-#  api-docs:
-#    title: "@project.name@"
-#    description: "@project.description@"
-#    version: "@java.version@"
