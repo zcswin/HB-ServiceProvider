@@ -11,7 +11,7 @@ public class OpenAPIConfig {
     OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("服务 API 文档")
+                        .title("服务提供者 API 文档")
                         .version("1.0")
                         .description("这是一个 Spring Boot 项目的 API 文档"));
     }

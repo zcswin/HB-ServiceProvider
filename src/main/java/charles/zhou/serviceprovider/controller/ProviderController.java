@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import charles.zhou.serviceprovider.entity.User;
+import charles.zhou.serviceprovider.rpc.ServiceConsumerClient;
 import charles.zhou.serviceprovider.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -17,14 +18,22 @@ import io.swagger.v3.oas.annotations.Operation;
 public class ProviderController {
 	
     @Value("${server.port}")
-    private String serverPort; // 注入当前服务的端口号
+    private String serverPort; // 注入当前服务的端口号    
 	
     @GetMapping("/service")
     @Operation(summary = "提供服务消息", description = "返回服务消息详细")
     public String providerService() {
         return "This is a service provided by the Charles Zhou.Port:" + serverPort;
     }   
-
+    
+    @Autowired
+    ServiceConsumerClient serviceConsumerClient;
+    
+    @GetMapping("/call-service-consumer")
+    @Operation(summary = "轮询消费者服务端API及端口", description = "返回消费者服务消息详细")
+    public String consumeService() {
+        return serviceConsumerClient.getService();
+    }    
     
     @Autowired
     private UserService userService;
